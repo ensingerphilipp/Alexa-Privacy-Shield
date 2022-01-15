@@ -1,6 +1,3 @@
-#ifndef __sampler_base_h__
-#define __sampler_base_h__
-
 #include <Arduino.h>
 #include "driver/i2s.h"
 
@@ -17,12 +14,11 @@ private:
     // i2s writer queue
     QueueHandle_t m_i2sQueue;
     // src of samples for us to play
-    SampleSource *m_sample_generator;
-
+    I2SSampler *m_sample_provider;
+    int m_last_audio_position;
+    
 public:
-    void start(SampleSource *sample_generator);
+    void start(I2SSampler *sample_provider);
 
     friend void i2sWriterTask(void *param);
 };
-
-#endif

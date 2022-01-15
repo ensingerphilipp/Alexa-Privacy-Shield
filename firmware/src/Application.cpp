@@ -11,6 +11,7 @@ Application::Application(I2SSampler *sample_provider, IndicatorLight *indicator_
     // command recongiser - streams audio to the server for recognition
     m_wakeword_recognized_state = new WakeWordRecognizedState(sample_provider, indicator_light);
     // start off in the detecting wakeword state
+    //m_current_state = m_wakeword_recognized_state;
     m_current_state = m_detect_wake_word_state;
     m_current_state->enterState();
 }
@@ -23,14 +24,14 @@ void Application::run()
     {
         m_current_state->exitState();
         // switch to the next state - very simple state machine so we just go to the other state...
-        /* if (m_current_state == m_detect_wake_word_state)
+        if (m_current_state == m_detect_wake_word_state)
         {
             m_current_state = m_wakeword_recognized_state;
         }
         else
         {
             m_current_state = m_detect_wake_word_state;
-        } */
+        }
         m_current_state->enterState();
     }
     vTaskDelay(10);
