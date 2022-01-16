@@ -14,8 +14,8 @@
 
 typedef struct
 {
-    uint32_t left;
-    uint32_t right;
+    uint16_t left;
+    uint16_t right;
 } Frame_t;
 
 void i2sWriterTask(void *param)
@@ -65,10 +65,10 @@ void i2sWriterTask(void *param)
                                 for (int i = 0; i < sample_count && i < 128; i++)
                                 {   
                                     //get sample and set left and right channel equal because only mono mic is used
-                                    uint32_t left = reader->getCurrentSample() + 32768;
+                                    int16_t left = (reader->getCurrentSample() + 32767);
                                     sample_buffer[i].left = left;
                                     sample_buffer[i].right = left; 
-                                    //Serial.printf("%d ", sample_buffer[i].left);
+                                    //Serial.printf("%d \n",  (uint8_t) left);
                                     reader->moveToNextSample();
                                 }
                                 //Serial.printf("\n");
@@ -89,7 +89,7 @@ void i2sWriterTask(void *param)
                         // write data to the i2s peripheral
                         //Serial.printf("I2S Writing Data to Speaker!\n");
                         
-                        i2s_write(I2S_NUM_0, buffer_position + (uint8_t *)sample_buffer,
+                        i2s_write(I2S_NUM_0, buffer_position + (uint8_t *) sample_buffer,
                                   availableBytes, &bytesWritten, portMAX_DELAY);
                         availableBytes -= bytesWritten;
                         buffer_position += bytesWritten;

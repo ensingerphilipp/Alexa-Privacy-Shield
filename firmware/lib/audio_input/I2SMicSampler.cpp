@@ -1,6 +1,7 @@
 #include "I2SMicSampler.h"
 #include "driver/i2s.h"
 #include "soc/i2s_reg.h"
+#include <Arduino.h>
 
 I2SMicSampler::I2SMicSampler(i2s_pin_config_t &i2sPins, bool fixSPH0645) : I2SSampler()
 {
@@ -24,7 +25,9 @@ void I2SMicSampler::processI2SData(uint8_t *i2sData, size_t bytesRead)
 {
     int32_t *samples = (int32_t *)i2sData;
     for (int i = 0; i < bytesRead / 4; i++)
-    {
-        addSample(samples[i] >> 11);
+    {   
+        //Serial.printf("%d \n", samples[i]);
+        addSample((samples[i]) >> 11);
+        //Serial.printf("shifted: %d \n", (samples[i] & 0xFFFFFFF0) >> 11);
     }
 }
