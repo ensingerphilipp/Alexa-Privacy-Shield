@@ -10,7 +10,7 @@
 #include "DACOutput.h"
 
 // number of frames to try and send at once (a frame is a left and right sample)
-#define NUM_FRAMES_TO_SEND 128
+#define NUM_FRAMES_TO_SEND 1024
 
 typedef struct
 {
@@ -23,7 +23,7 @@ void i2sWriterTask(void *param)
     DACOutput *output = (DACOutput *)param;
     int availableBytes = 0;
     int buffer_position = 0;
-    Frame_t sample_buffer[128];
+    Frame_t sample_buffer[NUM_FRAMES_TO_SEND];
 
     while (true)
     {
@@ -62,7 +62,7 @@ void i2sWriterTask(void *param)
                             
                             while (sample_count > 0)
                             {
-                                for (int i = 0; i < sample_count && i < 128; i++)
+                                for (int i = 0; i < sample_count && i < NUM_FRAMES_TO_SEND; i++)
                                 {   
                                     //get sample and set left and right channel equal because only mono mic is used
                                     int16_t left = (reader->getCurrentSample() + 32767);
@@ -72,7 +72,7 @@ void i2sWriterTask(void *param)
                                     reader->moveToNextSample();
                                 }
                                 //Serial.printf("\n");
-                                sample_count -= 128;
+                                sample_count -= NUM_FRAMES_TO_SEND;
                             }
                             output->m_last_audio_position = reader->getIndex();
                             delete (reader);
@@ -123,5 +123,5 @@ void DACOutput::start(I2SSampler *sample_provider)
     i2s_zero_dma_buffer(I2S_NUM_0);
     // start a task to write samples to the i2s peripheral
     TaskHandle_t writerTaskHandle;
-    xTaskCreate(i2sWriterTask, "i2s Writer Task", 4096, this, 1, &writerTaskHandle);
+    xTaskCreate(i2sWriterTask, "i2s Writer Task", 8192, this, 1, &writerTaskHandle);
 }

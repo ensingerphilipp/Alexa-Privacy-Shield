@@ -41,7 +41,7 @@ bool WakeWordRecognizedState::run()
     //while not interrupted by arduino
     while(true){
         Serial.printf("Listening?\n");
-        sleep(100);       
+        sleep(1000);       
     }
         
     return true;
