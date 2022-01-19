@@ -1,4 +1,4 @@
-#include <Arduino.h>
+#include "Arduino.h"
 #include <driver/i2s.h>
 #include <esp_task_wdt.h>
 #include "I2SMicSampler.h"
@@ -6,6 +6,9 @@
 #include "Application.h"
 #include "SPIFFS.h"
 #include "IndicatorLight.h"
+#include "Wire.h"
+#include <Adafruit_NeoPixel.h>
+#include "LED_I2C.h"
 
 // i2s config for reading from both channels of I2S
 i2s_config_t i2sMemsConfigBothChannels = {
@@ -13,7 +16,7 @@ i2s_config_t i2sMemsConfigBothChannels = {
     .sample_rate = 16000,
     .bits_per_sample = I2S_BITS_PER_SAMPLE_32BIT,
     .channel_format = I2S_MIC_CHANNEL,
-    .communication_format = i2s_comm_format_t(I2S_COMM_FORMAT_I2S),
+    .communication_format = I2S_COMM_FORMAT_STAND_I2S,
     .intr_alloc_flags = ESP_INTR_FLAG_LEVEL1,
     .dma_buf_count = 4,
     .dma_buf_len = 128,
@@ -45,6 +48,8 @@ void applicationTask(void *param)
   }
 }
 
+LED_I2C led_i2c;
+
 void setup()
 {
   Serial.begin(115200);
@@ -52,6 +57,11 @@ void setup()
   Serial.println("Starting up");
   Serial.printf("Total heap: %d\n", ESP.getHeapSize());
   Serial.printf("Free heap: %d\n", ESP.getFreeHeap());
+
+  led_i2c.led_i2c_setup();
+
+  pinMode(23, OUTPUT);
+  digitalWrite(23, LOW);
 
   // startup SPIFFS for the wav files
   // SPIFFS.begin();
@@ -78,5 +88,5 @@ void setup()
 
 void loop()
 {
-  vTaskDelay(1000);
+  vTaskDelay(1);
 }

@@ -44,6 +44,7 @@
         "cinttypes": "cpp",
         "regex": "cpp",
         "utility": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "optional": "cpp"
     }
 }

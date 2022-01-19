@@ -36,8 +36,13 @@ void WakeWordRecognizedState::enterState()
 
 bool WakeWordRecognizedState::run()
 {   
+    digitalWrite(23, HIGH);
+    delay(200);
+    digitalWrite(23, LOW);
+    delay(100);
     DACOutput output = DACOutput();
     output.start(m_sample_provider);
+    
     //while not interrupted by arduino
     while(true){
         Serial.printf("Listening?\n");
