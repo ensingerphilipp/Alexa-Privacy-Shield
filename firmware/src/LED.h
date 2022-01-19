@@ -70,64 +70,25 @@ class LED {
       //-----------------------------//
       //---- Orange Color Values ----//
       //-----------------------------//
-      if(colorValue1==0x21 && colorValue2==0x0B && colorValue3==0){
+      if(colorValue1>0 && colorValue2>0 && colorValue3==0){
         return orange;
       }
       //-----------------------------//
       //---- Purple Color Values ----//
       //-----------------------------//
-      else if(colorValue1==0x01 && colorValue2==0 && colorValue3==0x01){
-        return purple;
-      }
-      else if(colorValue1==0x02 && colorValue2==0 && colorValue3==0x04){
-        return purple;
-      }
-      else if(colorValue1==0x03 && colorValue2==0 && colorValue3==0x06){
-        return purple;
-      }
-      else if(colorValue1==0x05 && colorValue2==0 && colorValue3==0x09){
-        return purple;
-      }
-      else if(colorValue1==0x06 && colorValue2==0 && colorValue3==0x0B){
-        return purple;
-      }
-      else if(colorValue1==0x07 && colorValue2==0 && colorValue3==0x0D){
-        return purple;
-      }
-      else if(colorValue1==0x08 && colorValue2==0 && colorValue3==0x10){
-        return purple;
-      }
-      else if(colorValue1==0x0A && colorValue2==0 && colorValue3==0x12){
-        return purple;
-      }
-      else if(colorValue1==0x0B && colorValue2==0 && colorValue3==0x15){
-        return purple;
-      }
-      else if(colorValue1==0x0D && colorValue2==0 && colorValue3==0x17){
+      else if(colorValue1>0 && colorValue2==0 && colorValue3>0){
         return purple;
       }
       //-----------------------------//
       //----- Blue Color Values -----//
       //-----------------------------//
-      else if(colorValue1==0 && colorValue2==0 && colorValue3==0x1E){
+      else if(colorValue1==0 && colorValue2==0 && colorValue3>0){
         return blue;
       }
       //-----------------------------//
       //----- Cyan Color Values -----//
       //-----------------------------//
-      else if(colorValue1==0 && colorValue2==0x1E && colorValue3==0x1E){
-        return cyan;
-      }
-      else if(colorValue1==0 && colorValue2==0x15 && colorValue3==0x1E){
-        return cyan;
-      }
-      else if(colorValue1==0 && colorValue2==0x24 && colorValue3==0x1E){
-        return cyan;
-      }
-      else if(colorValue1==0 && colorValue2==0x17 && colorValue3==0x1E){
-        return cyan;
-      }
-      else if(colorValue1==0 && colorValue2==0x1C && colorValue3==0x1C){
+      else if(colorValue1==0 && colorValue2>0 && colorValue3>0){
         return cyan;
       }
       //----------------------------//

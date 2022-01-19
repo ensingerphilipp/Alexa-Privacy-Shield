@@ -7,6 +7,7 @@
 #include "DACOutput.h"
 #include "../config.h"
 #include <string.h>
+#include "LED.h"
 
 #define WINDOW_SIZE 320
 #define STEP_SIZE 160
@@ -36,18 +37,20 @@ void WakeWordRecognizedState::enterState()
 
 bool WakeWordRecognizedState::run()
 {   
+    extern state assistant_state;
     digitalWrite(23, HIGH);
-    delay(200);
+    vTaskDelay(100);
     digitalWrite(23, LOW);
-    delay(100);
     DACOutput output = DACOutput();
     output.start(m_sample_provider);
-    
+    vTaskDelay(200);
     //while not interrupted by arduino
-    while(true){
-        Serial.printf("Listening?\n");
-        sleep(1000);       
+    Serial.println("Listening...");
+    while(assistant_state==listening){
+        vTaskDelay(100);      
     }
+    Serial.println("Stop listening");
+    //TODO
         
     return true;
 }

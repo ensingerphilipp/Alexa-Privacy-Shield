@@ -48,8 +48,6 @@ void applicationTask(void *param)
   }
 }
 
-LED_I2C led_i2c;
-
 void setup()
 {
   Serial.begin(115200);
@@ -58,7 +56,7 @@ void setup()
   Serial.printf("Total heap: %d\n", ESP.getHeapSize());
   Serial.printf("Free heap: %d\n", ESP.getFreeHeap());
 
-  led_i2c.led_i2c_setup();
+  LED_I2C led_i2c;
 
   pinMode(23, OUTPUT);
   digitalWrite(23, LOW);
@@ -88,5 +86,7 @@ void setup()
 
 void loop()
 {
-  vTaskDelay(1);
+  //Serial.print("State: ");
+  //Serial.println(assistant_state);
+  vTaskDelay(1000);
 }

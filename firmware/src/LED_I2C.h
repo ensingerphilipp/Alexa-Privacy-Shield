@@ -302,23 +302,19 @@ void receiveEvent(int howMany)
 
 class LED_I2C
 {
-    public:
-        LED_I2C() {
-            
-        }
-
-        void led_i2c_setup(){
-            for(int i = 0; i<12; i++){
-                leds[i]=LED();
-            }
-            strip.begin();
-            strip.fill(strip.Color(0,0,200), 1, 12);
-            strip.show();
-            delay(1000);
-            strip.fill(strip.Color(0,0,0), 1, 12);
-            strip.show();
-            Wire.onReceive(receiveEvent);
-            Wire.begin(0x3f,21,22,100000);
-        }
+  public:
+      LED_I2C(){
+          for(int i = 0; i<12; i++){
+              leds[i]=LED();
+          }
+          strip.begin();
+          strip.fill(strip.Color(0,0,200), 1, 12);
+          strip.show();
+          delay(1000);
+          strip.fill(strip.Color(0,0,0), 1, 12);
+          strip.show();
+          Wire.onReceive(receiveEvent);
+          Wire.begin(0x3f,21,22,100000);
+      }
     
 };

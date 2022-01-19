@@ -121,7 +121,8 @@ void DACOutput::start(I2SSampler *sample_provider)
     i2s_set_dac_mode(I2S_DAC_CHANNEL_BOTH_EN);
     // clear the DMA buffers
     i2s_zero_dma_buffer(I2S_NUM_0);
-    // start a task to write samples to the i2s peripheral
+    
     TaskHandle_t writerTaskHandle;
+    // start a task to write samples to the i2s peripheral
     xTaskCreate(i2sWriterTask, "i2s Writer Task", 8192, this, 1, &writerTaskHandle);
 }
