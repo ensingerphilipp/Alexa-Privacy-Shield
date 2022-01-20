@@ -31,10 +31,8 @@ void i2sWriterTask(void *param)
         i2s_event_t evt;
         if (xQueueReceive(output->m_i2sQueue, &evt, portMAX_DELAY) == pdPASS)
         {
-            Serial.printf("In i2sWritertask #1");
             if (evt.type == I2S_EVENT_TX_DONE)
             {
-                Serial.printf("Event TX Done");
                 size_t bytesWritten = 0;
                 do
                 {
@@ -101,6 +99,9 @@ void i2sWriterTask(void *param)
     }
 }
 
+DACOutput::DACOutput(){
+}
+
 void DACOutput::start(I2SSampler *sample_provider)
 {
     m_sample_provider = sample_provider;
@@ -122,7 +123,14 @@ void DACOutput::start(I2SSampler *sample_provider)
     // clear the DMA buffers
     i2s_zero_dma_buffer(I2S_NUM_0);
     
-    TaskHandle_t writerTaskHandle;
+    TaskHandle_t writerTaskHandle = NULL;
     // start a task to write samples to the i2s peripheral
     xTaskCreate(i2sWriterTask, "i2s Writer Task", 8192, this, 1, &writerTaskHandle);
+    m_i2sWriterTaskHandle = writerTaskHandle;  
+}
+
+void DACOutput::stop()
+{   
+    vTaskDelete(m_i2sWriterTaskHandle);
+    i2s_driver_uninstall(I2S_NUM_0);
 }

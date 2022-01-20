@@ -18,7 +18,9 @@ private:
     int m_last_audio_position;
     
 public:
+    DACOutput();
     void start(I2SSampler *sample_provider);
+    void stop();
 
     friend void i2sWriterTask(void *param);
 };

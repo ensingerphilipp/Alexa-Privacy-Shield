@@ -313,8 +313,10 @@ class LED_I2C
           delay(1000);
           strip.fill(strip.Color(0,0,0), 1, 12);
           strip.show();
-          Wire.onReceive(receiveEvent);
-          Wire.begin(0x3f,21,22,100000);
+          
+          // Für release einkommentieren und 2.00 version mit backmerged wire verwenden
+          //Wire.onReceive(receiveEvent);
+          //Wire.begin(0x3f,21,22,100000);
       }
     
 };

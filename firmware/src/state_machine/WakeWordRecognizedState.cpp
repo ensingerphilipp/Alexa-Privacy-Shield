@@ -28,10 +28,8 @@ void WakeWordRecognizedState::enterState()
     m_start_time = millis();
     m_elapsed_time = 0;
     m_last_audio_position = -1;
-    Serial.println("Ready for Pasthrough");
-
-    uint32_t free_ram = esp_get_free_heap_size();
-    Serial.printf("Free ram before start of Passthrough %d\n", free_ram);
+    m_dac_output = new DACOutput();
+    Serial.println("Ready for Passthrough");
     return;
 }
 
@@ -41,22 +39,24 @@ bool WakeWordRecognizedState::run()
     digitalWrite(23, HIGH);
     vTaskDelay(100);
     digitalWrite(23, LOW);
-    DACOutput output = DACOutput();
-    output.start(m_sample_provider);
+    m_dac_output->start(m_sample_provider);
     vTaskDelay(200);
     //while not interrupted by arduino
-    Serial.println("Listening...");
-    while(assistant_state==listening){
-        vTaskDelay(100);      
-    }
-    Serial.println("Stop listening");
+    vTaskDelay(8000);
+    //while(assistant_state==listening){
+        //vTaskDelay(100);      
+    //}
+    Serial.println("Stopping Passthrough");
+    m_dac_output->stop();
     //TODO
         
     return true;
 }
 
 void WakeWordRecognizedState::exitState()
-{
+{   
+    delete m_dac_output;
+    m_dac_output = NULL;
     uint32_t free_ram = esp_get_free_heap_size();
-    Serial.printf("Free ram after request %d\n", free_ram);
+    Serial.printf("Free ram after WakeWordRecognized cleanup %d\n", free_ram);
 }

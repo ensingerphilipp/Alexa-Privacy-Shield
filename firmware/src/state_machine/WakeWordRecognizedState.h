@@ -5,15 +5,16 @@
 
 class I2SSampler;
 class IndicatorLight;
+class DACOutput;
 
 class WakeWordRecognizedState : public State
 {
 private:
     I2SSampler *m_sample_provider;
+    DACOutput *m_dac_output;
     unsigned long m_start_time;
     unsigned long m_elapsed_time;
     int m_last_audio_position;
-
     IndicatorLight *m_indicator_light;
 
 public:
