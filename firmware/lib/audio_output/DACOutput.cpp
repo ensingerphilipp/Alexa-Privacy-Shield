@@ -125,7 +125,7 @@ void DACOutput::start(I2SSampler *sample_provider)
     i2s_zero_dma_buffer(I2S_NUM_0);
     
     TaskHandle_t writerTaskHandle = NULL;
-    // start a task to write samples to the i2s peripheral
+    // start a task to write samples to the i2s peripheral 
     xTaskCreate(i2sWriterTask, "i2s Writer Task", 8192, this, 1, &writerTaskHandle);
     m_i2sWriterTaskHandle = writerTaskHandle;  
 }
