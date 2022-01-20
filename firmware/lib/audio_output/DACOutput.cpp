@@ -1,6 +1,7 @@
 
 #include <Arduino.h>
 #include "driver/i2s.h"
+#include <driver/dac.h>
 #include <math.h>
 #include <SPIFFS.h>
 #include <FS.h>
@@ -119,7 +120,7 @@ void DACOutput::start(I2SSampler *sample_provider)
     //install and start i2s driver
     i2s_driver_install(I2S_NUM_0, &i2sConfig, 4, &m_i2sQueue);
     // enable the DAC channels
-    i2s_set_dac_mode(I2S_DAC_CHANNEL_BOTH_EN);
+    i2s_set_dac_mode(I2S_DAC_CHANNEL_LEFT_EN);
     // clear the DMA buffers
     i2s_zero_dma_buffer(I2S_NUM_0);
     
@@ -133,4 +134,5 @@ void DACOutput::stop()
 {   
     vTaskDelete(m_i2sWriterTaskHandle);
     i2s_driver_uninstall(I2S_NUM_0);
+    dac_output_disable(DAC_CHANNEL_2);
 }
