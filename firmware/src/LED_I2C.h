@@ -314,9 +314,8 @@ class LED_I2C
           strip.fill(strip.Color(0,0,0), 1, 12);
           strip.show();
           
-          // Für release einkommentieren und 2.00 version mit backmerged wire verwenden
-          //Wire.onReceive(receiveEvent);
-          //Wire.begin(0x3f,21,22,100000);
+          Wire.onReceive(receiveEvent);
+          Wire.begin(0x3f,21,22,100000);
       }
     
 };

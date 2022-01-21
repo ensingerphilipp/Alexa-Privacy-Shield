@@ -42,13 +42,13 @@ bool WakeWordRecognizedState::run()
     m_dac_output->start(m_sample_provider);
     vTaskDelay(200);
     //while not interrupted by arduino
-    vTaskDelay(8000);
-    //while(assistant_state==listening){
-        //vTaskDelay(100);      
-    //}
-    Serial.println("Stopping Passthrough");
+    //vTaskDelay(8000);
+    Serial.println("Started Passthrough");
+    while(assistant_state==listening){
+        vTaskDelay(100);      
+    }
     m_dac_output->stop();
-    //TODO
+    Serial.println("Stopped Passthrough");
         
     return true;
 }
