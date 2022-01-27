@@ -7,7 +7,7 @@ LED leds[12];
 boolean value_changed = false;
 boolean show_actual_led = true;
 state assistant_state=normal;
-Adafruit_NeoPixel strip(12, 16, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip(12, 18, NEO_GRB + NEO_KHZ800);
 
 void receiveEvent(int howMany)
 {
