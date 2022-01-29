@@ -179,21 +179,18 @@ function visualize(stream) {
 }
 
 var wantedWords = [
-  'Friday Friday',
   'Friday',
+  'Friday_',
   'Friday!',
   'Friday?',
   'Friday.',
+  'Friday..',
+  'Friday??',
+  'Friday!!',
 ];
 
 var fillerWords = [
-  'Alexa',
-  'Komm',
-  'fertig',
-  'Haus',
-  'Bett',
-  'Wow',
-  'lustig',
+
 ];
 
 function getRecordedWords() {
@@ -292,11 +289,11 @@ function startRecording() {
   }
   updateProgress();
   document.querySelector('.info-display').innerText = word;
-  mediaRecorder.start();
+  setTimeout(mediaRecorder.start(), 2000);
   console.log(mediaRecorder.state);
   console.log("recorder started");
   record.style.background = "red";
-  setTimeout(endRecording, 1500);
+  setTimeout(endRecording, 1000);
 }
 
 function endRecording() {
