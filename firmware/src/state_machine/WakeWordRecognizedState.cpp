@@ -29,7 +29,7 @@ void WakeWordRecognizedState::enterState()
     m_elapsed_time = 0;
     m_last_audio_position = -1;
     m_dac_output = new DACOutput();
-    Serial.println("Ready for Passthrough");
+    //Serial.println("Ready for Passthrough");
     return;
 }
 
@@ -58,5 +58,5 @@ void WakeWordRecognizedState::exitState()
     delete m_dac_output;
     m_dac_output = NULL;
     uint32_t free_ram = esp_get_free_heap_size();
-    Serial.printf("Free ram after WakeWordRecognized cleanup %d\n", free_ram);
+    //Serial.printf("Free ram after WakeWordRecognized cleanup %d\n", free_ram);
 }

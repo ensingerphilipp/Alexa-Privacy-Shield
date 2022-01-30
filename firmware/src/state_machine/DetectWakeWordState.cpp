@@ -22,10 +22,10 @@ void DetectWakeWordState::enterState()
 {
     // Create our neural network
     m_nn = new NeuralNetwork();
-    Serial.println("Created Neural Net");
+    //Serial.println("Created Neural Net");
     // create our audio processor
     m_audio_processor = new AudioProcessor(AUDIO_LENGTH, WINDOW_SIZE, STEP_SIZE, POOLING_SIZE);
-    Serial.println("Created audio processor");
+    //Serial.println("Created audio processor");
 
     m_number_of_detections = 0;
 }
@@ -63,7 +63,7 @@ bool DetectWakeWordState::run()
         {
             m_number_of_detections = 0;
             // detected the wake word in several runs, move to the next state
-            Serial.printf("P(%.2f): Marvin detected\n", output);
+            Serial.printf("P(%.2f): FRIDAY detected\n", output);
             return true;
         }
     }
@@ -78,5 +78,5 @@ void DetectWakeWordState::exitState()
     delete m_audio_processor;
     m_audio_processor = NULL;
     uint32_t free_ram = esp_get_free_heap_size();
-    Serial.printf("Free ram after DetectWakeWord cleanup %d\n", free_ram);
+    //Serial.printf("Free ram after DetectWakeWord cleanup %d\n", free_ram);
 }
