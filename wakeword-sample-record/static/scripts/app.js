@@ -284,15 +284,17 @@ function startRecording() {
   }
   var word = getNextWord();
   if (word === null) {
-    promptToSave();
+    // No Prompt for better UX
+    //promptToSave();
     return;
   }
   updateProgress();
   document.querySelector('.info-display').innerText = word;
-  setTimeout(mediaRecorder.start(), 2000);
+  setTimeout(2000);
+  record.style.background = "red";
   console.log(mediaRecorder.state);
   console.log("recorder started");
-  record.style.background = "red";
+  mediaRecorder.start()
   setTimeout(endRecording, 1000);
 }
 
