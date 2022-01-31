@@ -297,22 +297,19 @@ function makeRecordButtonRed() {
   record.style.background = "red";
 }
 
-function updateWordBeforeRecording() {
-  var word = getNextWord();
-  if (word === null) {
-    // No Prompt for better UX
-    //promptToSave();
-    return;
-  }
-  document.querySelector('.info-display').innerText = word;
-}
-
 
 function startRecordingBetterUX(){
   setTimeout(function() {
     // First Update Shown word and Progress after 600ms (0,6 Seconds) of waiting time
+    var word = getNextWord();
+    if (word === null) {
+      // No Prompt for better UX
+      //promptToSave();
+      upload.disabled = false;
+      return;
+    }
+    document.querySelector('.info-display').innerText = word;
     updateProgress();
-    updateWordBeforeRecording();
 	  setTimeout(function() {
                           //Then Make the Button Red after waiting another 1500ms (1,5 Seconds)
                           makeRecordButtonRed();
