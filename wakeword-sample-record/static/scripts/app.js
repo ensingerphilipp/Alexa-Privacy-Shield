@@ -68,8 +68,11 @@ if (navigator.getUserMedia) {
       }
       mediaStreamSource.disconnect();
       console.log(mediaRecorder.state);
-      record.style.background = "";
-      record.style.color = ""; 
+      setTimeout(function(){
+                            record.style.background = "";
+                            record.style.color = "";
+                            }, 2000); 
+       
       stop.disabled = true;
       record.disabled = false;
     }
@@ -307,7 +310,7 @@ function updateWordBeforeRecording() {
 
 function startRecordingBetterUX(){
   setTimeout(function() {
-    // First Update Shown word and Progress after 1000ms (1 Seconds) of waiting time
+    // First Update Shown word and Progress after 600ms (0,6 Seconds) of waiting time
     updateProgress();
     updateWordBeforeRecording();
 	  setTimeout(function() {
@@ -318,7 +321,7 @@ function startRecordingBetterUX(){
                                                 startRecording();
                                                 }, 200);
 	                        }, 1500);
-    }, 1000);
+    }, 600);
 }
 
 function startRecording() {
