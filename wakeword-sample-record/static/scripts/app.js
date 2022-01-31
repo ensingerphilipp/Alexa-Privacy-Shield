@@ -51,7 +51,7 @@ if (navigator.getUserMedia) {
 	      progress.innerText = "1";
 	      setTimeout(function() {
 		  progress.innerText = "";
-		  startRecording();
+      startRecordingBetterUX();
 	      }, 1000);
 	  }, 1000);
       }, 1000);
@@ -129,6 +129,15 @@ if (navigator.getUserMedia) {
 	'Your device does not support the HTML5 API needed to record audio (this is a known problem on iOS)';  
 }
 
+function sleep(milliseconds) {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now();
+  } while (currentDate - date < milliseconds);
+}
+
+
 function visualize(stream) {
   var analyser = audioCtx.createAnalyser();
   analyser.fftSize = 2048;
@@ -184,9 +193,13 @@ var wantedWords = [
   'Friday!',
   'Friday?',
   'Friday.',
-  'Friday..',
   'Friday??',
-  'Friday!!',
+  'Friday..',
+  'Ei',
+  'Frei',
+  'Freitag',
+  'Hi!',
+  'Day'
 ];
 
 var fillerWords = [
@@ -277,21 +290,42 @@ function updateProgress() {
   document.querySelector('.progress-display').innerText = progress;
 }
 
-function startRecording() {
-  if (ignoreAutoPlay) {
-    ignoreAutoPlay = false;
-    return;
-  }
+function makeRecordButtonRed() {
+  record.style.background = "red";
+}
+
+function updateWordBeforeRecording() {
   var word = getNextWord();
   if (word === null) {
     // No Prompt for better UX
     //promptToSave();
     return;
   }
-  updateProgress();
   document.querySelector('.info-display').innerText = word;
-  setTimeout(2000);
-  record.style.background = "red";
+}
+
+
+function startRecordingBetterUX(){
+  setTimeout(function() {
+    // First Update Shown word and Progress after 1000ms (1 Seconds) of waiting time
+    updateProgress();
+    updateWordBeforeRecording();
+	  setTimeout(function() {
+                          //Then Make the Button Red after waiting another 1500ms (1,5 Seconds)
+                          makeRecordButtonRed();
+                          setTimeout(function() {
+                                                //Then Start the Recording after waiting another 250ms (0,25 Seconds) 
+                                                startRecording();
+                                                }, 200);
+	                        }, 1500);
+    }, 1000);
+}
+
+function startRecording() {
+  if (ignoreAutoPlay) {
+    ignoreAutoPlay = false;
+    return;
+  }
   console.log(mediaRecorder.state);
   console.log("recorder started");
   mediaRecorder.start()
@@ -308,7 +342,7 @@ function endRecording() {
   console.log("recorder stopped");
   record.style.background = "";
   record.style.color = "";
-  setTimeout(startRecording, 1000);
+  startRecordingBetterUX();
 }
 
 function promptToSave() {
