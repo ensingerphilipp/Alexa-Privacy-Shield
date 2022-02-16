@@ -42,3 +42,4 @@ The following folders including the 1 second wav samples should exist:
     'zero'
     '_background'
     '_problem_words_'
+    '_background_noise_'
