@@ -1,1 +1,0 @@
-Paste the two Folders "cores" and "libraries" into framework-folder (on Windows: "C:\Users\<user>\.platformio\packages\framework-arduinoespressif32") and accept replacing existing files.
