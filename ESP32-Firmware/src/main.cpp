@@ -9,6 +9,10 @@
 #include "Wire.h"
 #include <Adafruit_NeoPixel.h>
 #include "LED_I2C.h"
+#include <WiFi.h>
+#include "driver/adc.h"
+#include <esp_wifi.h>
+#include <esp_bt.h>
 
 // i2s config for reading from both channels of I2S
 i2s_config_t i2sMemsConfigBothChannels = {
@@ -63,6 +67,15 @@ void setup()
   Serial.println("Starting up");
   Serial.printf("Total heap: %d\n", ESP.getHeapSize());
   Serial.printf("Free heap: %d\n", ESP.getFreeHeap());
+
+  // Disable Wifi + ADC and Bluetooth to reduce DAC Noise and Power Consumption
+  WiFi.mode(WIFI_OFF);
+  btStop();
+  adc_power_release();
+  //adc_power_off(); <-- Deprecated but the only function to actually force shutdown adc
+  esp_wifi_stop();
+  esp_bt_controller_disable();
+  
 
   LED_I2C led_i2c;
 
