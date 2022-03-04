@@ -33,19 +33,35 @@ void WakeWordRecognizedState::enterState()
     return;
 }
 
+void WakeWordRecognizedState::wakeup_assistant(int pin)
+{
+    digitalWrite(pin, HIGH);
+    vTaskDelay(100);
+    digitalWrite(pin, LOW);
+}
+
 bool WakeWordRecognizedState::run()
 {   
     extern state assistant_state;
-    digitalWrite(23, HIGH);
-    vTaskDelay(100);
-    digitalWrite(23, LOW);
+    extern bool activation_button_pressed;
+    extern int speech_assistant_activation_button_pin;
+
+    //Wake up Speech Assistant
+    wakeup_assistant(speech_assistant_activation_button_pin);
+
+    //start DAC Output (Mic Passthrough)
     m_dac_output->start(m_sample_provider);
     vTaskDelay(200);
-    //while not interrupted by arduino
-    //vTaskDelay(8000);
+
     Serial.println("Started Passthrough");
+    //wait until speech assistant exits listening state and react to button interrupt
     while(assistant_state==listening){
-        vTaskDelay(100);      
+        if(activation_button_pressed){
+            Serial.println("Activation Button pressed");
+            activation_button_pressed = false;
+            wakeup_assistant(speech_assistant_activation_button_pin);
+        }
+        vTaskDelay(100);
     }
     m_dac_output->stop();
     Serial.println("Stopped Passthrough");

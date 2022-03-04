@@ -48,6 +48,14 @@ void applicationTask(void *param)
   }
 }
 
+bool activation_button_pressed = false; //variable used for external activation button detection
+int external_activation_button_pin = 13; //pin where the external activation button is connected
+int speech_assistant_activation_button_pin = 23; //pin where the activation button of the speech assistant is connected
+
+void IRAM_ATTR isr() {
+  activation_button_pressed = true;
+}
+
 void setup()
 {
   Serial.begin(115200);
@@ -58,8 +66,11 @@ void setup()
 
   LED_I2C led_i2c;
 
-  pinMode(23, OUTPUT);
-  digitalWrite(23, LOW);
+  pinMode(speech_assistant_activation_button_pin, OUTPUT);
+  digitalWrite(speech_assistant_activation_button_pin, LOW);
+
+  pinMode(external_activation_button_pin, INPUT_PULLDOWN);
+  attachInterrupt(external_activation_button_pin, isr, RISING);
 
   // startup SPIFFS for the wav files
   // SPIFFS.begin();

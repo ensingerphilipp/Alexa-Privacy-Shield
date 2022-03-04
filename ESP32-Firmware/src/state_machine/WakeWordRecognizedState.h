@@ -16,6 +16,7 @@ private:
     unsigned long m_elapsed_time;
     int m_last_audio_position;
     IndicatorLight *m_indicator_light;
+    void wakeup_assistant(int pin);
 
 public:
     WakeWordRecognizedState(I2SSampler *sample_provider, IndicatorLight *indicator_light);

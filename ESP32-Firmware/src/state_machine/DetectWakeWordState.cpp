@@ -67,6 +67,12 @@ bool DetectWakeWordState::run()
             return true;
         }
     }
+    extern bool activation_button_pressed;
+    if(activation_button_pressed){
+        Serial.println("Activation Button pressed");
+        activation_button_pressed = false;
+        return true;
+    }
     // nothing detected stay in the current state
     return false;
 }
