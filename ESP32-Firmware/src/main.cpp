@@ -71,7 +71,7 @@ void setup()
   // Disable Wifi + ADC and Bluetooth to reduce DAC Noise and Power Consumption
   WiFi.mode(WIFI_OFF);
   btStop();
-  adc_power_release();
+  //adc_power_release();
   //adc_power_off(); <-- Deprecated but the only function to actually force shutdown adc
   esp_wifi_stop();
   esp_bt_controller_disable();

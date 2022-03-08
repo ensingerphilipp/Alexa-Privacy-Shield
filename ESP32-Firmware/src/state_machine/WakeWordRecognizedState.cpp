@@ -54,6 +54,13 @@ bool WakeWordRecognizedState::run()
     vTaskDelay(200);
 
     Serial.println("Started Passthrough");
+
+    //TODO: assistant not available/responding
+    /*
+    if(assistant_state!=listening){
+
+    }
+    */
     //wait until speech assistant exits listening state and react to button interrupt
     while(assistant_state==listening){
         if(activation_button_pressed){
