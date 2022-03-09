@@ -1,0 +1,3 @@
+[submodule "Wakeword-Sample-Collector"]
+	path = Wakeword-Sample-Collector
+	url = https://github.com/ensingerphilipp/Wakeword-Sample-Collector
