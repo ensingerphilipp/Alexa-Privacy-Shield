@@ -11,6 +11,7 @@
 #include "DACOutput.h"
 
 // number of frames to try and send at once (a frame is a left and right sample)
+// needs to be > 512 frames to avoid hiccups in audio
 #define NUM_FRAMES_TO_SEND 1024
 
 typedef struct
@@ -108,7 +109,7 @@ void DACOutput::start(I2SSampler *sample_provider)
     m_sample_provider = sample_provider;
     m_last_audio_position = -1;
     // i2s config for writing both channels of I2S
-    i2s_config_t i2sConfig = {
+    i2s_config_t i2sConfig_internal_DAC = {
         .mode = (i2s_mode_t)(I2S_MODE_MASTER | I2S_MODE_TX | I2S_MODE_DAC_BUILT_IN),
         .sample_rate = 16000,
         .bits_per_sample = I2S_BITS_PER_SAMPLE_16BIT,
@@ -118,14 +119,14 @@ void DACOutput::start(I2SSampler *sample_provider)
         .dma_buf_count = 4,
         .dma_buf_len = 64};
     //install and start i2s driver
-    i2s_driver_install(I2S_NUM_0, &i2sConfig, 4, &m_i2sQueue);
+    i2s_driver_install(I2S_NUM_0, &i2sConfig_internal_DAC, 4, &m_i2sQueue);
     // enable the DAC channels
     i2s_set_dac_mode(I2S_DAC_CHANNEL_LEFT_EN);
     // clear the DMA buffers
     i2s_zero_dma_buffer(I2S_NUM_0);
     
     TaskHandle_t writerTaskHandle = NULL;
-    // start a task to write samples to the i2s peripheral  
+    // start a task to write samples to the i2s peripheral --> 8192 Samples? YUP with less it will create irritations in audio 
     xTaskCreate(i2sWriterTask, "i2s Writer Task", 8192, this, 1, &writerTaskHandle);
     m_i2sWriterTaskHandle = writerTaskHandle;  
 }
