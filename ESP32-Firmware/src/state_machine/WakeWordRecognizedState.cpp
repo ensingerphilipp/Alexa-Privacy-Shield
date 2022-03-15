@@ -7,13 +7,12 @@
 #include "DACOutput.h"
 #include "../config.h"
 #include <string.h>
-#include "LED.h"
+#include "Enums.h"
 
 #define WINDOW_SIZE 320
 #define STEP_SIZE 160
 #define POOLING_SIZE 6
 #define AUDIO_LENGTH 16000
-
 
 WakeWordRecognizedState::WakeWordRecognizedState(I2SSampler *sample_provider, IndicatorLight *indicator_light)
 {
@@ -42,7 +41,7 @@ void WakeWordRecognizedState::wakeup_assistant(int pin)
 
 bool WakeWordRecognizedState::run()
 {   
-    extern state assistant_state;
+    extern assistant_state current_state;
     extern bool activation_button_pressed;
     extern int speech_assistant_activation_button_pin;
 
@@ -62,7 +61,7 @@ bool WakeWordRecognizedState::run()
     }
     */
     //wait until speech assistant exits listening state and react to button interrupt
-    while(assistant_state==listening){
+    while(current_state==listening){
         if(activation_button_pressed){
             Serial.println("Activation Button pressed");
             activation_button_pressed = false;

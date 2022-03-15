@@ -6,13 +6,11 @@
 #include "Application.h"
 #include "SPIFFS.h"
 #include "IndicatorLight.h"
-#include "Wire.h"
-#include <Adafruit_NeoPixel.h>
-#include "LED_I2C.h"
 #include <WiFi.h>
 #include "driver/adc.h"
 #include <esp_wifi.h>
 #include <esp_bt.h>
+#include "AssistantStateAndLEDHandler.h"
 
 // i2s config for reading from both channels of I2S
 i2s_config_t i2sMemsConfigBothChannels = {
@@ -57,7 +55,14 @@ int external_activation_button_pin = 13; //pin where the external activation but
 int speech_assistant_activation_button_pin = 23; //pin where the activation button of the speech assistant is connected
 
 void IRAM_ATTR isr() {
-  activation_button_pressed = true;
+  static unsigned long last_interrupt_time = 0;
+  unsigned long interrupt_time = millis();
+  // If interrupts come faster than 200ms, assume it's a bounce and ignore
+  if (interrupt_time - last_interrupt_time > 200) 
+  {
+    activation_button_pressed = true;
+  }
+  last_interrupt_time = interrupt_time;
 }
 
 void setup()
@@ -73,9 +78,8 @@ void setup()
   btStop();
   esp_wifi_stop();
   esp_bt_controller_disable();
-  
 
-  LED_I2C led_i2c;
+  init_I2C_and_LEDs();
 
   pinMode(speech_assistant_activation_button_pin, OUTPUT);
   digitalWrite(speech_assistant_activation_button_pin, LOW);
