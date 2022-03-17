@@ -19,7 +19,9 @@ The project was started as semester project at [UNIVERSITY OF APPLIED SCIENCES U
 # So how do we build it?
 
 A comprehensive and easy to understand guide will be released in the not so distant future. (summer 2022 at the latest) 
-Please understand that we do not want to publish an incomplete (and probably really really bad) guide until we have made sure that everything is correct and complete.
+A somewhat crappy draft of a guide is available in the [Wiki](https://github.com/ensingerphilipp/Alexa-Privacy-Shield/wiki)
+
+<del>Please understand that we do not want to publish an incomplete (and probably really really bad) guide until we have made sure that everything is correct and complete.<del>
 
 # How does the Privacy Shield work? - An overview
 
