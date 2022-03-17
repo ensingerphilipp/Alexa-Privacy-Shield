@@ -9,10 +9,10 @@ To help understand the intention of this project we suggest you to watch the sho
 Commercial video (No english version yet)\
 (German Version: [Werbevideo](https://youtu.be/KQXyvrAh7YI))
 
-The goal of Project Friday is to secure private conversations while using a speech assistant (Alexa Echo Dot). As of now we only provide documentation and guides  for usage with the Echo Dot but the general concept is applicable to other Speech Assistants aswell. (If we will decide to include other Assistants later down the road is subject to our time constraints.)
-With this Privacy Shield the Echo Dot remains usable as usual, the only diference being that you can be sure your private conversations actually do remain really private.
+The goal of Project Friday is to secure private conversations while using a speech assistant (Alexa Echo Dot). As of now we only support the Amazon Echo Dot but the general concept is applicable to other Speech Assistants aswell. 
+(If we will decide to include other Assistants later down the road is subject to our time constraints.)
 
-To wake up the assistant you will be able to use "Friday" or "Jarvis" (Iron Man Fans where 'ya at? 😆) and if youre brave enough - can also train a custom wakeword yourself.
+With this Privacy Shield the Echo Dot remains usable as usual, the only diference being that you can be sure your private conversations actually do remain really private. To wake up the assistant you will be able to use "Friday" or "Jarvis" (Iron Man Fans where 'ya at? 😆) and if youre brave enough - can also train a custom wakeword yourself.
 
 The project was started as semester project at [UNIVERSITY OF APPLIED SCIENCES UPPER AUSTRIA, Campus Hagenberg](https://www.fh-ooe.at/campus-hagenberg/) by the students Philipp Ensinger and Frank Weber. As the prototype was pretty successful we decided to continue developing here on GitHub to improve the functionality and add new features. The Wakeword Engine is based on the git project [DIY-Alexa by Atomic14](https://github.com/atomic14/diy-alexa).
 
