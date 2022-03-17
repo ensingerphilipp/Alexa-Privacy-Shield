@@ -1,5 +1,5 @@
-# Dont forget to mention DIY-Alexa by Atomic14
+# Project Friday - A Privacy Shield for Speech Assistants
 
-# Project Friday
+Please notice, that this project ist still a prototype under development!
 
-    git clone git@git.mhgb.net:project-friday.git
+Refer to the [Wiki](../../wiki) for more information.
