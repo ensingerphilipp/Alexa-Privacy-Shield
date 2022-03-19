@@ -4,23 +4,28 @@ Please notice, that this project ist still a prototype under development!
 
 # What is Project Friday?
 
-To help understand the intention of this project we suggest to watch the short commercial video we created:
+To help understand the intention of this project we suggest you to watch the short commercial video we created:
 
 Commercial video (No english version yet)\
 (German Version: [Werbevideo](https://youtu.be/KQXyvrAh7YI))
 
-The goal of Project Friday is to secure private conversations while using a speech assistant (Alexa Echo Dot). It is basically a Privacy Shield for Speech Assistants as it is probably adjustable for other products like the Google Nest as well. By now this documentation only covers the use of an EchoDot, but in the future there will also be branches for other Speech Assistants.
-With this Privacy Shield the EchoDot remains usable as usual, with the difference that you can be sure that your private conversations remain really private.
-Also you can use another word like "Friday" or "Jarvis" instead of "Alexa" to activate it, as if you were Iron Man.
+The goal of Project Friday is to secure private conversations while using a speech assistant (Alexa Echo Dot). As of now we only support the Amazon Echo Dot but the general concept is applicable to other Speech Assistants aswell. 
+(If we will decide to include other Assistants later down the road is subject to our time constraints.)
+
+With this Privacy Shield the Echo Dot remains usable as usual, the only diference being that you can be sure your private conversations actually do remain really private. To wake up the assistant you will be able to use "Friday" or "Jarvis" (Iron Man Fans where 'ya at? 😆) and if youre brave enough - can also train a custom wakeword yourself.
 
 The project was started as semester project at [UNIVERSITY OF APPLIED SCIENCES UPPER AUSTRIA, Campus Hagenberg](https://www.fh-ooe.at/campus-hagenberg/) by the students Philipp Ensinger and Frank Weber. As the prototype was pretty successful we decided to continue developing here on GitHub to improve the functionality and add new features. The Wakeword Engine is based on the git project [DIY-Alexa by Atomic14](https://github.com/atomic14/diy-alexa).
 
-On this GitHub Page we want to provide a DIY guide for building this Privacy Shield. We want to make short videos and a lot of photos of every single step so you can easily comprehend how it is done. This comprehensive guide will be available as soon as it's not a prototype anymore and sufficiently tested, which will be at the latest in summer 2022. Please understand that we do not want to publish the (probably faulty) guide until we have made sure that everything is correct and complete.
-Have fun securing your privacy and feel free to report bugs and suggestions.
+# So how do we build it?
+
+A comprehensive and easy to understand guide will be released in the not so distant future (summer 2022 at the latest).
+A crappy draft version of the guide is available in the [Wiki](https://github.com/ensingerphilipp/Alexa-Privacy-Shield/wiki).
+
+<del>Please understand that we do not want to publish an incomplete (and probably really really bad) guide until we have made sure that everything is correct and complete.<del>
 
 # How does the Privacy Shield work? - An overview
 
-We recommend to watch theses short videos to get an overview of how the Privacy Shield works:
+We recommend to watch theses short videos to get an overview of how the Privacy Shield works (if you know German lol):
 
 Functionality overview (No english version yet)\
 Explanation of basic schematics (No english version yet)
@@ -31,7 +36,7 @@ German Versions:\
 
 ---
 
-If you watched the videos you can skip the following part, as it is just the transcription of the video.
+Video Transcription in (broken) English for the time being:
 
 The central unit of the Privacy Shield is an ESP32 microcontroller.
 An I²S microphone is connected to this, which is used to detect the wake word. The neural network in the background is trained using the Tensorflow-Lite platform.
