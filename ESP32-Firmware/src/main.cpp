@@ -58,9 +58,23 @@ void IRAM_ATTR isr() {
   static unsigned long last_interrupt_time = 0;
   unsigned long interrupt_time = millis();
   // If interrupts come faster than 200ms, assume it's a bounce and ignore
-  if (interrupt_time - last_interrupt_time > 200) 
+  
+  
+  if (interrupt_time - last_interrupt_time > 50) 
   {
-    activation_button_pressed = true;
+    Serial.println("Button Change");
+    //Serial.println("Start While");
+    if(digitalRead(speech_assistant_activation_button_pin)==LOW){
+      digitalWrite(speech_assistant_activation_button_pin, HIGH);
+      Serial.println("Set High");
+    }
+    else{
+      digitalWrite(speech_assistant_activation_button_pin, LOW);
+      Serial.println("Set Low");
+      activation_button_pressed = true;
+    }
+    //Serial.println("End While");
+    
   }
   last_interrupt_time = interrupt_time;
 }
@@ -85,7 +99,7 @@ void setup()
   digitalWrite(speech_assistant_activation_button_pin, LOW);
 
   pinMode(external_activation_button_pin, INPUT_PULLDOWN);
-  attachInterrupt(external_activation_button_pin, isr, RISING);
+  attachInterrupt(external_activation_button_pin, isr, CHANGE);
 
   // startup SPIFFS for the wav files
   // SPIFFS.begin();

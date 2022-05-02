@@ -56,7 +56,7 @@ bool DetectWakeWordState::run()
         Serial.printf("Average detection time %.fms\n", m_average_detect_time);
     }
     // use quite a high threshold to prevent false positives
-    if (output > 0.99)
+    if (output > 0.96)
     {
         m_number_of_detections++;
         if (m_number_of_detections > 1)
@@ -70,7 +70,6 @@ bool DetectWakeWordState::run()
     extern bool activation_button_pressed;
     if(activation_button_pressed){
         Serial.println("Activation Button pressed");
-        activation_button_pressed = false;
         return true;
     }
     // nothing detected stay in the current state

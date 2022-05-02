@@ -46,7 +46,13 @@ bool WakeWordRecognizedState::run()
     extern int speech_assistant_activation_button_pin;
 
     //Wake up Speech Assistant
-    wakeup_assistant(speech_assistant_activation_button_pin);
+    if(!activation_button_pressed){
+        wakeup_assistant(speech_assistant_activation_button_pin);
+    }
+    else{
+        activation_button_pressed = false;
+    }
+    
 
     //start DAC Output (Mic Passthrough)
     m_dac_output->start(m_sample_provider);
@@ -65,7 +71,7 @@ bool WakeWordRecognizedState::run()
         if(activation_button_pressed){
             Serial.println("Activation Button pressed");
             activation_button_pressed = false;
-            wakeup_assistant(speech_assistant_activation_button_pin);
+            //wakeup_assistant(speech_assistant_activation_button_pin);
         }
         vTaskDelay(100);
     }
