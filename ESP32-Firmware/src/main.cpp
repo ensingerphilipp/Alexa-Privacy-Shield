@@ -4,7 +4,6 @@
 #include "I2SMicSampler.h"
 #include "config.h"
 #include "Application.h"
-#include "SPIFFS.h"
 #include "IndicatorLight.h"
 #include <WiFi.h>
 #include "driver/adc.h"
@@ -32,6 +31,16 @@ i2s_pin_config_t i2s_mic_pins = {
     .ws_io_num = I2S_MIC_LEFT_RIGHT_CLOCK,
     .data_out_num = I2S_PIN_NO_CHANGE,
     .data_in_num = I2S_MIC_SERIAL_DATA};
+
+// i2s external DAC pins (Leave at default if internal dac is used)
+i2s_pin_config_t i2s_edac_pins = {
+    .bck_io_num = I2S_EDAC_BCK,
+    .ws_io_num = I2S_EDAC_WS,
+    .data_out_num = I2S_EDAC_DATA,
+    .data_in_num = I2S_PIN_NO_CHANGE};
+
+//Set to false to use external DAC
+bool use_internal_dac = true;
 
 // This task does all the heavy lifting for our application
 void applicationTask(void *param)
@@ -114,7 +123,7 @@ void setup()
   IndicatorLight *indicator_light = new IndicatorLight();
 
   // create our application
-  Application *application = new Application(i2s_sampler, indicator_light);
+  Application *application = new Application(i2s_sampler, &i2s_edac_pins, use_internal_dac, indicator_light);
 
   // set up the i2s sample writer task
   TaskHandle_t applicationTaskHandle;

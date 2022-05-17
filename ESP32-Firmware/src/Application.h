@@ -15,7 +15,7 @@ private:
     State *m_current_state;
 
 public:
-    Application(I2SSampler *sample_provider, IndicatorLight *indicator_light);
+    Application(I2SSampler *sample_provider, i2s_pin_config_t *i2s_edac_pins, bool use_internal_dac, IndicatorLight *indicator_light);
     ~Application();
     void run();
 };

@@ -104,11 +104,12 @@ void i2sWriterTask(void *param)
 DACOutput::DACOutput(){
 }
 
+//Start Method using internal_dac
 void DACOutput::start(I2SSampler *sample_provider)
 {
     m_sample_provider = sample_provider;
     m_last_audio_position = -1;
-    // i2s config for writing both channels of I2S
+    // i2s config for writing both channels of I2S internal DAC
     i2s_config_t i2sConfig_internal_DAC = {
         .mode = (i2s_mode_t)(I2S_MODE_MASTER | I2S_MODE_TX | I2S_MODE_DAC_BUILT_IN),
         .sample_rate = 16000,
@@ -118,12 +119,46 @@ void DACOutput::start(I2SSampler *sample_provider)
         .intr_alloc_flags = ESP_INTR_FLAG_LEVEL1,
         .dma_buf_count = 4,
         .dma_buf_len = 64};
-    //install and start i2s driver
+
+    //install and start i2s driver for internal DAC
     i2s_driver_install(I2S_NUM_0, &i2sConfig_internal_DAC, 4, &m_i2sQueue);
     // enable the DAC channels
     i2s_set_dac_mode(I2S_DAC_CHANNEL_LEFT_EN);
     // clear the DMA buffers
     i2s_zero_dma_buffer(I2S_NUM_0);
+    
+    TaskHandle_t writerTaskHandle = NULL;
+    // start a task to write samples to the i2s peripheral --> 8192 Samples? YUP with less it will create irritations in audio 
+    xTaskCreate(i2sWriterTask, "i2s Writer Task", 8192, this, 1, &writerTaskHandle);
+    m_i2sWriterTaskHandle = writerTaskHandle;  
+}
+
+//start method using external_dac
+void DACOutput::start(I2SSampler *sample_provider, i2s_pin_config_t *i2s_edac_pins)
+{
+    m_sample_provider = sample_provider;
+    m_last_audio_position = -1;
+
+    // i2s config for writing both channels of I2S external DAC 
+    i2s_config_t i2sConfig_external_DAC = {
+        .mode = (i2s_mode_t)(I2S_MODE_MASTER | I2S_MODE_TX),
+        .sample_rate = 16000,
+        .bits_per_sample = I2S_BITS_PER_SAMPLE_16BIT,
+        .channel_format = I2S_CHANNEL_FMT_RIGHT_LEFT,
+        .communication_format = I2S_COMM_FORMAT_STAND_I2S,
+        .intr_alloc_flags = ESP_INTR_FLAG_LEVEL1,
+        .dma_buf_count = 4,
+        .dma_buf_len = 512};
+
+    //Install and Start i2s driver for external DAC
+    i2s_driver_install(I2S_NUM_0, &i2sConfig_external_DAC, 4, &m_i2sQueue);
+    //Need both channels for correct mixing in MAX 98537A
+    i2s_set_dac_mode(I2S_DAC_CHANNEL_BOTH_EN);
+    // set up the i2s pins
+    i2s_set_pin(I2S_NUM_0, i2s_edac_pins);
+    //clear dma buffers
+    i2s_zero_dma_buffer(I2S_NUM_0);
+
     
     TaskHandle_t writerTaskHandle = NULL;
     // start a task to write samples to the i2s peripheral --> 8192 Samples? YUP with less it will create irritations in audio 

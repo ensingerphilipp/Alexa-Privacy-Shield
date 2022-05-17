@@ -20,6 +20,7 @@ private:
 public:
     DACOutput();
     void start(I2SSampler *sample_provider);
+    void start(I2SSampler *sample_provider, i2s_pin_config_t *m_i2s_edac_pins);
     void stop();
 
     friend void i2sWriterTask(void *param);

@@ -14,10 +14,12 @@
 #define POOLING_SIZE 6
 #define AUDIO_LENGTH 16000
 
-WakeWordRecognizedState::WakeWordRecognizedState(I2SSampler *sample_provider, IndicatorLight *indicator_light)
+WakeWordRecognizedState::WakeWordRecognizedState(I2SSampler *sample_provider, i2s_pin_config_t *i2s_edac_pins, bool use_internal_dac, IndicatorLight *indicator_light)
 {
     // save the sample provider for use later
     m_sample_provider = sample_provider;
+    m_i2s_edac_pins = i2s_edac_pins;
+    m_use_internal_dac = use_internal_dac;
     m_indicator_light = indicator_light;
 }
 
@@ -55,7 +57,12 @@ bool WakeWordRecognizedState::run()
     
 
     //start DAC Output (Mic Passthrough)
-    m_dac_output->start(m_sample_provider);
+    if(m_use_internal_dac){
+        m_dac_output->start(m_sample_provider);
+    } else {
+        m_dac_output->start(m_sample_provider, m_i2s_edac_pins);
+    }
+    
     vTaskDelay(200);
 
     Serial.println("Started Passthrough");

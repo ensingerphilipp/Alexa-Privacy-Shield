@@ -15,11 +15,13 @@ private:
     unsigned long m_start_time;
     unsigned long m_elapsed_time;
     int m_last_audio_position;
+    bool m_use_internal_dac;
+    i2s_pin_config_t *m_i2s_edac_pins;
     IndicatorLight *m_indicator_light;
     void wakeup_assistant(int pin);
 
 public:
-    WakeWordRecognizedState(I2SSampler *sample_provider, IndicatorLight *indicator_light);
+    WakeWordRecognizedState(I2SSampler *sample_provider, i2s_pin_config_t *i2s_edac_pins, bool use_internal_dac, IndicatorLight *indicator_light);
     void enterState();
     bool run();
     void exitState();
