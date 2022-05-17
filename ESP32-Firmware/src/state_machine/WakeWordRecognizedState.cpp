@@ -5,7 +5,7 @@
 #include "WakeWordRecognizedState.h"
 #include "IndicatorLight.h"
 #include "DACOutput.h"
-#include "../config.h"
+#include "config.h"
 #include <string.h>
 #include "Enums.h"
 
@@ -45,11 +45,10 @@ bool WakeWordRecognizedState::run()
 {   
     extern assistant_state current_state;
     extern bool activation_button_pressed;
-    extern int speech_assistant_activation_button_pin;
 
     //Wake up Speech Assistant
     if(!activation_button_pressed){
-        wakeup_assistant(speech_assistant_activation_button_pin);
+        wakeup_assistant(ASSISTANT_ACTIVATION_BUTTON_PIN);
     }
     else{
         activation_button_pressed = false;
@@ -78,7 +77,7 @@ bool WakeWordRecognizedState::run()
         if(activation_button_pressed){
             Serial.println("Activation Button pressed");
             activation_button_pressed = false;
-            //wakeup_assistant(speech_assistant_activation_button_pin);
+            //wakeup_assistant(ASSISTANT_ACTIVATION_BUTTON_PIN);
         }
         vTaskDelay(100);
     }

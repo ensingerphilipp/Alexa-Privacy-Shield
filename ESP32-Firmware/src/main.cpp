@@ -60,8 +60,6 @@ void applicationTask(void *param)
 }
 
 bool activation_button_pressed = false; //variable used for external activation button detection
-int external_activation_button_pin = 13; //pin where the external activation button is connected
-int speech_assistant_activation_button_pin = 23; //pin where the activation button of the speech assistant is connected
 
 void IRAM_ATTR isr() {
   static unsigned long last_interrupt_time = 0;
@@ -73,12 +71,12 @@ void IRAM_ATTR isr() {
   {
     Serial.println("Button Change");
     //Serial.println("Start While");
-    if(digitalRead(speech_assistant_activation_button_pin)==LOW){
-      digitalWrite(speech_assistant_activation_button_pin, HIGH);
+    if(digitalRead(ASSISTANT_ACTIVATION_BUTTON_PIN)==LOW){
+      digitalWrite(ASSISTANT_ACTIVATION_BUTTON_PIN, HIGH);
       Serial.println("Set High");
     }
     else{
-      digitalWrite(speech_assistant_activation_button_pin, LOW);
+      digitalWrite(ASSISTANT_ACTIVATION_BUTTON_PIN, LOW);
       Serial.println("Set Low");
       activation_button_pressed = true;
     }
@@ -102,20 +100,19 @@ void setup()
   esp_wifi_stop();
   esp_bt_controller_disable();
 
+  //Initialize I2C Communnication for LED-Controller
   init_I2C_and_LEDs();
 
-  pinMode(speech_assistant_activation_button_pin, OUTPUT);
-  digitalWrite(speech_assistant_activation_button_pin, LOW);
+  pinMode(ASSISTANT_ACTIVATION_BUTTON_PIN, OUTPUT);
+  digitalWrite(ASSISTANT_ACTIVATION_BUTTON_PIN, LOW);
 
-  pinMode(external_activation_button_pin, INPUT_PULLDOWN);
-  attachInterrupt(external_activation_button_pin, isr, CHANGE);
+  pinMode(EXT_ACTIVATION_BUTTON_PIN, INPUT_PULLDOWN);
+  attachInterrupt(EXT_ACTIVATION_BUTTON_PIN, isr, CHANGE);
 
-  // startup SPIFFS for the wav files
-  // SPIFFS.begin();
   // make sure we don't get killed for our long running tasks
   esp_task_wdt_init(10, false);
 
-  // start up the I2S input (from either an I2S microphone or Analogue microphone via the ADC)
+  // start up the I2S input 
   // Direct i2s input from INMP441 or the SPH0645
   I2SSampler *i2s_sampler = new I2SMicSampler(i2s_mic_pins, false);
 

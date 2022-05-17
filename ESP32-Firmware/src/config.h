@@ -1,6 +1,3 @@
-// are you using an I2S microphone - comment this out if you want to use an analog mic and ADC input
-#define USE_I2S_MIC_INPUT
-
 // I2S Microphone Settings
 
 // Which channel is the I2S microphone on? I2S_CHANNEL_FMT_ONLY_LEFT or I2S_CHANNEL_FMT_ONLY_RIGHT
@@ -11,7 +8,11 @@
 #define I2S_MIC_SERIAL_DATA GPIO_NUM_14
 
 // Define external DAC Pins
-
 #define I2S_EDAC_BCK GPIO_NUM_4
 #define I2S_EDAC_WS GPIO_NUM_2
 #define I2S_EDAC_DATA GPIO_NUM_15
+
+//Activation Button Pins
+#define ASSISTANT_ACTIVATION_BUTTON_PIN GPIO_NUM_23
+#define EXT_ACTIVATION_BUTTON_PIN GPIO_NUM_13
+
