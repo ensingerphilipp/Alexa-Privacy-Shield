@@ -120,7 +120,7 @@ void setup()
   TaskHandle_t applicationTaskHandle;
   xTaskCreate(applicationTask, "Application Task", 8192, application, 1, &applicationTaskHandle);
 
-  // start sampling from i2s device - use I2S_NUM_0 as that's the one that supports the internal ADC
+  // start sampling from i2s device
   i2s_sampler->start(I2S_NUM_1, i2sMemsConfigBothChannels, applicationTaskHandle);
 }
 
