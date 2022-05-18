@@ -82,8 +82,6 @@ bool WakeWordRecognizedState::run()
         }
         vTaskDelay(100);
     }
-    while(1){
-    }
     m_dac_output->stop();
     Serial.println("Stopped Passthrough");
         
