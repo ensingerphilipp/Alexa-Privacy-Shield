@@ -49,16 +49,17 @@ bool WakeWordRecognizedState::run()
     //Wake up Speech Assistant
     if(!activation_button_pressed){
         wakeup_assistant(ASSISTANT_ACTIVATION_BUTTON_PIN);
-    }
-    else{
+    } else {
         activation_button_pressed = false;
     }
     
 
     //start DAC Output (Mic Passthrough)
     if(m_use_internal_dac){
-        m_dac_output->start(m_sample_provider);
+        Serial.println("Use internal DAC");
+        m_dac_output->start(m_sample_provider);   
     } else {
+        Serial.println("Use external DAC");
         m_dac_output->start(m_sample_provider, m_i2s_edac_pins);
     }
     
@@ -69,8 +70,8 @@ bool WakeWordRecognizedState::run()
     //TODO: assistant not available/responding
     /*
     if(assistant_state!=listening){
-
     }
+
     */
     //wait until speech assistant exits listening state and react to button interrupt
     while(current_state==listening){
@@ -80,6 +81,8 @@ bool WakeWordRecognizedState::run()
             //wakeup_assistant(ASSISTANT_ACTIVATION_BUTTON_PIN);
         }
         vTaskDelay(100);
+    }
+    while(1){
     }
     m_dac_output->stop();
     Serial.println("Stopped Passthrough");
