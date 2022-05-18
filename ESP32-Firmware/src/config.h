@@ -8,9 +8,9 @@
 #define I2S_MIC_SERIAL_DATA GPIO_NUM_14
 
 // Define external DAC Pins
-#define I2S_EDAC_BCK GPIO_NUM_4
-#define I2S_EDAC_WS GPIO_NUM_2
-#define I2S_EDAC_DATA GPIO_NUM_15
+#define I2S_EDAC_WS GPIO_NUM_4
+#define I2S_EDAC_BCK GPIO_NUM_0
+#define I2S_EDAC_DATA GPIO_NUM_2
 
 //Activation Button Pins
 #define ASSISTANT_ACTIVATION_BUTTON_PIN GPIO_NUM_23
