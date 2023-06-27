@@ -40,7 +40,7 @@ i2s_pin_config_t i2s_edac_pins = {
     .data_in_num = I2S_PIN_NO_CHANGE};
 
 //Set to false to use external DAC
-bool use_internal_dac = false;
+bool use_internal_dac = true;
 
 // This task does all the heavy lifting for our application
 void applicationTask(void *param)

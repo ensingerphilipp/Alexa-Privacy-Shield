@@ -24,4 +24,5 @@ public:
     void stop();
 
     friend void i2sWriterTask(void *param);
+    friend void i2sEdacWriterTask(void *param);
 };

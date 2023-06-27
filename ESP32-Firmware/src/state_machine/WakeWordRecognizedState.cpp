@@ -74,9 +74,6 @@ bool WakeWordRecognizedState::run()
 
     */
     //wait until speech assistant exits listening state and react to button interrupt
-    while(1){
-        vTaskDelay(100);
-    }
     while(current_state==listening){
         if(activation_button_pressed){
             Serial.println("Activation Button pressed");

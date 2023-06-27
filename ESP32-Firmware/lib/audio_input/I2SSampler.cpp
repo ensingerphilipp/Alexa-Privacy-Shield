@@ -67,7 +67,7 @@ void I2SSampler::start(i2s_port_t i2s_port, i2s_config_t &i2s_config, TaskHandle
 RingBufferAccessor *I2SSampler::getRingBufferReader()
 {
     RingBufferAccessor *reader = new RingBufferAccessor(m_audio_buffers, AUDIO_BUFFER_COUNT);
-    // place the reaader at the same position as the writer - clients can move it around as required
+    // place the reader at the same position as the writer - clients can move it around as required
     reader->setIndex(m_write_ring_buffer_accessor->getIndex());
     return reader;
 }
